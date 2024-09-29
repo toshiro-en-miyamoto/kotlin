@@ -101,6 +101,60 @@ println("$s.length is ${s.length}")
 // abc.length is 3
 ```
 
+#### The `Unit` type
+
+By default, if you don't specify the return type of a function, the default return type is `Unit`. `Unit` means the function doesn't return a value. `Unit` is equivalent to `void` return types in other languages (`void` in Java and C; `Void` or empty tuple `()` in Swift; `None` in Python, etc.). Any function that doesn't return a value implicitly returns `Unit`.
+
+```kotlin
+fun greeting(): Unit {
+    println("Hello, world!")
+}
+```
+
+It's optional to specify the `Unit` return type in Kotlin.
+
+> You'll see the `Unit` type again when you learn about a Kotlin feature called lambdas.
+
+### Functions
+
+```kotlin
+fun birthdayGreeting(name: String, age: Int): String {
+    return """
+    	>Happy birthday, $name.
+        >You are now $age years old.
+    """.trimMargin(">")
+}
+```
+
+Function parameters in Kotlin are immutable. You cannot reassign the value of a parameter from within the function body.
+
+#### Named arguments
+
+You may call a function with many parameters or you may want to pass your arguments in a different order, such as putting the age parameter before the name parameter. When you include the parameter name when you call a function, it's called a *named argument*.
+
+```kotlin
+fun main() {
+    println(birthdayGreeting(age = 1_500, name = "E"))
+}
+```
+
+#### Default arguments
+
+Function parameters can also specify *default arguments*.
+
+```kotlin
+fun main() {
+    println(birthdayGreeting(age = 1_500))
+}
+
+fun birthdayGreeting(name: String = "?", age: Int): String {
+    return """
+    	>Happy birthday, $name.
+        >You are now $age years old.
+    """.trimMargin(">")
+}
+```
+
 ## Android Studio
 
 ### Flutter application
