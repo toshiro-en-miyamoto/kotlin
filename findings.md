@@ -1,5 +1,13 @@
 # Findings
 
+Training courses:
+
+- [Android Developer: Training](https://developer.android.com/courses)
+  - [Android Basic with Compose](https://developer.android.com/courses/android-basics-compose/course)
+    - [Unit 1: Your first Android App](https://developer.android.com/courses/android-basics-compose/unit-1)
+      - Pathway 1: Intro to Kotlin
+      - Pathway 2: Set up Android Studio
+
 ## Kotlin
 
 Refer to [Kotlin language specification](https://kotlinlang.org/spec/introduction.html)
