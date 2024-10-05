@@ -114,7 +114,8 @@ println("$s.length is ${s.length}")
 By default, if you don't specify the return type of a function, the default return type is `Unit`. `Unit` means the function doesn't return a value. `Unit` is equivalent to `void` return types in other languages (`void` in Java and C; `Void` or empty tuple `()` in Swift; `None` in Python, etc.). Any function that doesn't return a value implicitly returns `Unit`.
 
 ```kotlin
-fun greeting(): Unit {
+// fun greeting(): Unit {
+fun greeting() {
     println("Hello, world!")
 }
 ```
@@ -163,11 +164,82 @@ fun birthdayGreeting(name: String = "?", age: Int): String {
 }
 ```
 
+## Jetpack Compose
+
+References:
+
+- [Thinking in Compose](https://developer.android.com/develop/ui/compose/mental-model)
+- [API Guidelines for Jetpack Compose](https://github.com/androidx/androidx/blob/androidx-main/compose/docs/compose-api-guidelines.md#naming-unit-composable-functions-as-entities)
+- [API Guidelines for `@Composable` components in Jetpack Compose](https://github.com/androidx/androidx/blob/androidx-main/compose/docs/compose-component-api-guidelines.md)
+
+### Recomposition
+
+In an imperative UI model, to change a widget, you call a setter on the widget to change its internal state. In Compose, you call the composable function again with new data. Doing so causes the function to be recomposed &mdash; the widgets emitted by the function are redrawn, if necessary, with new data. The Compose framework can intelligently recompose only the components that changed. [Recomposition, Thinking in Compose]
+
+Recomposition is the process of calling your composable functions again when inputs change. This happens when the function's inputs change. When Compose recomposes based on new inputs, it only calls the functions or lambdas that might have changed, and skips the rest. By skipping all functions or lambdas that don't have changed parameters, Compose can recompose efficiently.
+
+Never depend on side-effects from executing composable functions, since a function's recomposition may be skipped. If you do, users may experience strange and unpredictable behavior in your app. A side-effect is any change that is visible to the rest of your app. For example, these actions are all dangerous side-effects:
+
+- Writing to a property of a shared object
+- Updating an observable in `ViewModel`
+- Updating shared preferences
+
+[Recomposition] discusses a number of things to be aware of when you use Compose:
+
+- Recomposition skips as many composable functions and lambdas as possible.
+- Recomposition is optimistic and may be canceled.
+- A composable function might be run quite frequently, as often as every 
+  frame of an animation.
+- Composable functions can execute in parallel.
+- Composable functions can execute in any order.
+
+### Composable functions
+
+Using Compose, you can build your user interface by defining a set of *composable functions* that take in data and emit UI elements. A simple example is a `Greeting` widget, which takes in a `String` and emits a `Text` widget which displays a greeting message.
+
+```
+@Composable
+fun Greeting(name: String) {
+    Test("Hello $name")
+}
+```
+
+A few noteworthy things about it:
+
+- All composable functions must be annotated with the `@Composable` 
+  annotation, which informs the Compose compiler that his function is 
+  intended to convert data into UI.
+- Composable functions that emit UI do not need to return anything.
+
+A `@Composable` function that returns `Unit` and emits the UI when it is composed in a hierarchy is known as a `@Composable` component. [API Guidelines for `@Composable` components]
+
+### Naming `Unit @Composalbe` functions as entities
+
+[API Guidelines for Jetpack Compose] recommends to name any function that returns `Unit` and bears the `@Composable` annotation
+
+- using `PascalCase`
+- a noun, optionally prefixed by descriptive adjectives
+- not a verb or verb phrase,
+- nor a preposition, adjective or adverb
+
 ## Android Studio
 
-### Flutter application
+### Markdown preview
 
-Flutter application development is supported. In the *Welcome to Android Studio* window, you can find the *New Flutter Project* menu.
+Android Studio Ladybug | 2024.2.1 on Mac:
+
+- find action: registry
+- scroll to `ide.browser.jcef.sandbox.enable`
+- disable that key, and close
+- find action:  Choose Boot runtime for the IDE
+- select the latest one
+  - 21.0.4b509.17 JetBrains Runtime JBR with JCEF (bundled by default))
+- restart
+
+### Editor soft wrap
+
+Enable `Settings` &gt; `Editor` &gt; `General` &gt; `Soft Wraps` &gt; 
+`Soft-wrap these files`.
 
 ### Additional packages
 
@@ -178,11 +250,39 @@ When a first *Empty Activity* project is created, two packages are automatically
 
 ### Build system
 
-Gradle is used by default.
+Gradle is used by default. Empty Activity projects created on Mac include the 
+following `.gitignore` files by default.
 
-### Java compatibility
+- `.gitignore` at the root directory:
+  ```gitignore
+  *.iml
+  .gradle
+  /local.properties
+  /.idea/caches
+  /.idea/libraries
+  /.idea/modules.xml
+  /.idea/workspace.xml
+  /.idea/navEditor.xml
+  /.idea/assetWizardSettings.xml
+  .DS_Store
+  /build
+  /captures
+  .externalNativeBuild
+  .cxx
+  local.properties
+  ```
+- `gitignore` at the `app` directory:
+  ```gitignore
+  /build
+  ```
+- `.gitignore` at the `.idea` directory:
+  ```gitignore
+  # Default ignored files
+  /shelf/
+  /workspace.xml
+  ```
 
-In the `app` folder, programs and test codes are placed beneath the `kotlin+java` folder.
+## Android Devices
 
 ### Emulator
 
@@ -222,8 +322,6 @@ Installing Google APIs Intel x86_64 Atom System Image in ~/Library/Android/sdk/s
 ```
 
 > When an emulator doesn't launch, open the SDK Manager (Android Studio menu: Tools > SDK Manager) and check the status of items in the SDK Platform and SDK Tools panes.
-
-## Android Devices
 
 ### Actions on devices
 
