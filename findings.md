@@ -171,6 +171,8 @@ References:
 - [Thinking in Compose](https://developer.android.com/develop/ui/compose/mental-model)
 - [API Guidelines for Jetpack Compose](https://github.com/androidx/androidx/blob/androidx-main/compose/docs/compose-api-guidelines.md#naming-unit-composable-functions-as-entities)
 - [API Guidelines for `@Composable` components in Jetpack Compose](https://github.com/androidx/androidx/blob/androidx-main/compose/docs/compose-component-api-guidelines.md)
+- [Compose layout basics, UI Guides](https://developer.android.com/develop/ui/compose/layouts/basics)
+- [8. Arrange the text elements in a row and column, Pathway 3: Build a basic layout, Unit1: Your first Android app, Android Basics with Compose](https://developer.android.com/codelabs/basic-android-kotlin-compose-text-composables#7)
 
 ### Recomposition
 
@@ -195,7 +197,7 @@ Never depend on side-effects from executing composable functions, since a functi
 
 ### Composable functions
 
-Using Compose, you can build your user interface by defining a set of *composable functions* that take in data and emit UI elements. A simple example is a `Greeting` widget, which takes in a `String` and emits a `Text` widget which displays a greeting message.
+[Thinking in Compose], you can build your user interface by defining a set of *composable functions* that take in data and emit UI elements. A simple example is a `Greeting` widget, which takes in a `String` and emits a `Text` widget which displays a greeting message.
 
 ```
 @Composable
@@ -213,7 +215,7 @@ A few noteworthy things about it:
 
 A `@Composable` function that returns `Unit` and emits the UI when it is composed in a hierarchy is known as a `@Composable` component. [API Guidelines for `@Composable` components]
 
-### Naming `Unit @Composalbe` functions as entities
+### Naming `Unit @Composable` functions as entities
 
 [API Guidelines for Jetpack Compose] recommends to name any function that returns `Unit` and bears the `@Composable` annotation
 
@@ -221,6 +223,62 @@ A `@Composable` function that returns `Unit` and emits the UI when it is compose
 - a noun, optionally prefixed by descriptive adjectives
 - not a verb or verb phrase,
 - nor a preposition, adjective or adverb
+
+### Standard layout components
+
+Compose provides a collection of ready-to-use layouts to help you arrange your UI elements, and makes it easy to define your own, more-specialized layouts. In many cases, you can just use Compose's standard layout elements. Often these building blocks are all you need: [Compose layouts basics]
+
+- `Column` to place items vertically on the screen
+- `Row` to place items horizontally on the screen
+- `Box` to put elements on top of another
+
+They support configuring the alignment of the elements they contain. You can write your own composable function to combine these layouts into a more elaborate layout that suits your app.
+
+### Trailing lambda syntax
+
+`Column`, `Row`, and `Box` are composable functions that take composable content as arguments, so you can place items inside these layout elements. [8. Arrange the text elements in a row and column]
+
+```
+Row {
+  Text("First column")
+  Text("Second column")
+}
+```
+
+Notice in the previous code snippet that curly braces are used instead of parentheses in the Row composable function. This is called *Trailing Lambda Syntax*.
+
+Kotlin offers a special syntax for passing functions as parameters to functions, when the last parameter is a function. When you pass a function as that parameter, you can use trailing lambda syntax.
+
+- Instead of putting the function inside the parentheses, you can place it outside the parentheses in curly braces.
+- This is a recommended and common practice in Compose, so you need to be familiar with how the code looks.
+
+```
+fun name(param1:T, param2:T, ..., function) {
+  // body
+}
+```
+
+For example, the last parameter in the `Row()` composable function is the `content` parameter, a function that describes the child UI elements. Suppose you wanted to create a row that contains three text elements. This code would work, but it's very cumbersome to use named parameter for the trailing lambda:
+
+```
+Row(
+  content = {
+    Text("Some text")
+    Text("Some more text")
+    Text("Last text")
+  }
+)
+```
+
+Because the `content` parameter is the last one in the function signature and you pass its value as a lambda expression, you can remove the `content` parameter and the parentheses as follows:
+
+```
+Row {
+  Text("Some text")
+  Text("Some more text")
+  Text("Last text")
+}
+```
 
 ## Android Studio
 
