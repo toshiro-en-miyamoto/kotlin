@@ -2,4 +2,6 @@
 
 Unit1: Your first Android app
 - Build a basic layout
-  - Birthday card, text edition
+  - [Add images to your Android app](./unit01/HappyBirthday/)
+  - Practice: Compose Basics
+    - [Compose article](./unit01/LearnTogether/)

@@ -7,6 +7,7 @@ Training courses:
     - [Unit 1: Your first Android App](https://developer.android.com/courses/android-basics-compose/unit-1)
       - Pathway 1: Intro to Kotlin
       - Pathway 2: Set up Android Studio
+      - Pathway 3: Build a basic layout
 
 ## Kotlin
 
@@ -171,8 +172,6 @@ References:
 - [Thinking in Compose](https://developer.android.com/develop/ui/compose/mental-model)
 - [API Guidelines for Jetpack Compose](https://github.com/androidx/androidx/blob/androidx-main/compose/docs/compose-api-guidelines.md#naming-unit-composable-functions-as-entities)
 - [API Guidelines for `@Composable` components in Jetpack Compose](https://github.com/androidx/androidx/blob/androidx-main/compose/docs/compose-component-api-guidelines.md)
-- [Compose layout basics, UI Guides](https://developer.android.com/develop/ui/compose/layouts/basics)
-- [8. Arrange the text elements in a row and column, Pathway 3: Build a basic layout, Unit1: Your first Android app, Android Basics with Compose](https://developer.android.com/codelabs/basic-android-kotlin-compose-text-composables#7)
 
 ### Recomposition
 
@@ -226,6 +225,13 @@ A `@Composable` function that returns `Unit` and emits the UI when it is compose
 
 ### Standard layout components
 
+References:
+
+- [Compose layout basics, UI Guides](https://developer.android.com/develop/ui/compose/layouts/basics)
+- [Jetpack Compose Playground](https://foso.github.io/Jetpack-Compose-Playground/)
+- [Jetpack Compose Reference: `foundation`](https://developer.android.com/reference/kotlin/androidx/compose/foundation/package-summary)
+- [Jetpack Compose Reference: `material3`](https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary)
+
 Compose provides a collection of ready-to-use layouts to help you arrange your UI elements, and makes it easy to define your own, more-specialized layouts. In many cases, you can just use Compose's standard layout elements. Often these building blocks are all you need: [Compose layouts basics]
 
 - `Column` to place items vertically on the screen
@@ -235,6 +241,10 @@ Compose provides a collection of ready-to-use layouts to help you arrange your U
 They support configuring the alignment of the elements they contain. You can write your own composable function to combine these layouts into a more elaborate layout that suits your app.
 
 ### Trailing lambda syntax
+
+References:
+
+- [8. Arrange the text elements in a row and column, Pathway 3: Build a basic layout, Unit1: Your first Android app, Android Basics with Compose](https://developer.android.com/codelabs/basic-android-kotlin-compose-text-composables#7)
 
 `Column`, `Row`, and `Box` are composable functions that take composable content as arguments, so you can place items inside these layout elements. [8. Arrange the text elements in a row and column]
 
@@ -277,6 +287,38 @@ Row {
   Text("Some text")
   Text("Some more text")
   Text("Last text")
+}
+```
+
+### Edge-to-edge
+
+On Android 14 (API level 34) and lower, your app's UI does not draw underneath the system bars and display cutouts by default.
+
+On Android 15 (API level 35) and higher, your app draws underneath the system bars and display cutouts once your app targets SDK 35. This results in a more seamless user experience and allows your app to take full advantage of the window space available to it.
+
+Displaying content behind the system UI is called going [edge-to-edge](https://developer.android.com/develop/ui/compose/layouts/insets).
+
+To enable edge-to-edge on previous Android versions, call `enableEdgeToEdge()` in `Activity.onCreate()`.
+
+> By enabling edge-to-edge, `Column` under `Scaffold` behaves as if `verticalArrangement = Arrangement.Space` property is given. At this writing, unable to find a way to control the arrangement. As shown in the following code, a simple solution is not to enable edge-to-edge.
+
+```
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // enableEdgeToEdge()
+        setContent {
+            YourAppTheme {
+                Scaffold(
+                    modifier = Modifier.fillMaxSize()
+                ) { innerPadding ->
+                    YourApp(
+                        modifier = Modifier.padding(innerPadding)
+                    )
+                }
+            }
+        }
+    }
 }
 ```
 
