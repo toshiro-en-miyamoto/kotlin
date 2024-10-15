@@ -9,7 +9,7 @@ The Android Basics with Compose is consisted of 8 units:
 Unit1: Your first Android app (10 hours, 2024/09/28 - )
 - Introduction to Kotlin (3 hours, 2024/09/28 - 09/30)
 - Setup Android Studio (4 hours, 2024/10/01 - 10/04)
-- Build a basic layout (3 hours, 2024/10/05 -)
+- Build a basic layout (3 hours, 2024/10/05 -) >>> 10 hours
 
 Unit 2: Building app UI (21 hours)
 - Kotlin fundamentals (8 hours)
