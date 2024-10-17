@@ -6,8 +6,9 @@
 ## Digital Design basic by Figma
 
 - Getting started in Design (30 mins, 2024-10-16)
-- Design thinking & ethics (30 mins, 2024-10-16)
-
+  - Design thinking & ethics (30 mins, 2024-10-16)
+  - Accessibility and inclusion design (30 mins, 2024-10-17)
+  - Content research & design (30 min, 2024-10-17)
 
 ## Android Basics with Compose (100 hours)
 
